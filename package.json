@@ -1,0 +1,23 @@
+{
+  "name": "score-recording-api",
+  "version": "1.0.0",
+  "description": "Records head2head score between 2 players/teams",
+  "license": "ISC",
+  "author": "eliaskr",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "dev": "cross-env NODE_ENV=development FIRESTORE_EMULATOR_HOST=localhost:8081 nodemon src/index.js",
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "firebase-admin": "^13.3.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "nodemon": "^3.1.10"
+  }
+}

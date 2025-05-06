@@ -1,0 +1,30 @@
+services:
+  firestore:
+    container_name: firestore
+    build:
+      context: .
+      dockerfile: Dockerfile.firestore
+    ports:
+      - "8081:8081" # Firestore emulator
+      - "4000:4000" # Emulator UI
+    volumes:
+      - .:/workspace
+    environment:
+      - FIREBASE_PROJECT=elkr-prod
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api
+    ports:
+      - "8080:8080"
+    environment:
+      GOOGLE_CLOUD_PROJECT: ${GOOGLE_CLOUD_PROJECT}
+      FIRESTORE_EMULATOR_HOST: firestore:8081
+      NODE_ENV: development
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      - firestore
