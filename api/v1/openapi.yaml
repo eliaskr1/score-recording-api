@@ -1,0 +1,159 @@
+openapi: 3.0.3
+info:
+  title: Padel Score Recording API
+  version: 1.0.0
+  description: API for managing padel players, matches, and head-to-head statistics.
+
+servers:
+  - url: http://localhost:8080
+
+paths:
+  /players:
+    post:
+      summary: Create a new player
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name:
+                  type: string
+      responses:
+        '201':
+          description: Player created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+        '400':
+          description: Missing player name
+
+    get:
+      summary: Get all players
+      responses:
+        '200':
+          description: List of players
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+
+  /matches:
+    post:
+      summary: Create a new match
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [player1, player2, winner, score]
+              properties:
+                player1:
+                  type: string
+                player2:
+                  type: string
+                winner:
+                  type: string
+                score:
+                  type: string
+                date:
+                  type: string
+                  format: date-time
+      responses:
+        '201':
+          description: Match created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  player1:
+                    type: string
+                  player2:
+                    type: string
+                  winner:
+                    type: string
+                  score:
+                    type: string
+                  date:
+                    type: string
+                    format: date-time
+        '400':
+          description: Missing match details
+
+    get:
+      summary: Get all matches (most recent first)
+      responses:
+        '200':
+          description: List of matches
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    player1:
+                      type: string
+                    player2:
+                      type: string
+                    winner:
+                      type: string
+                    score:
+                      type: string
+                    date:
+                      type: string
+                      format: date-time
+
+  /head2head:
+    get:
+      summary: Get head-to-head statistics between two players
+      parameters:
+        - name: player1
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: player2
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Head-to-head stats
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  player1:
+                    type: string
+                  player2:
+                    type: string
+                  totalMatches:
+                    type: integer
+                  player1Wins:
+                    type: integer
+                  player2Wins:
+                    type: integer
