@@ -1,7 +1,5 @@
-const admin = require('firebase-admin');
-const env = require('dotenv').config('../.env');
+const admin = require('../../firebase');
 
-admin.initializeApp({ projectId: env.GOOGLE_CLOUD_PROJECT });
 const db = admin.firestore();
 
 // Routes

@@ -7,9 +7,21 @@ info:
 servers:
   - url: http://localhost:8080
 
+components:
+  securitySchemes:
+    firebase:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - firebase: []
+
 paths:
   /players:
     post:
+      security:
+        - firebase: []
       summary: Create a new player
       operationId: postPlayer
       x-eov-operation-handler: v1/handlers/entities
@@ -39,6 +51,8 @@ paths:
           description: Missing player name
 
     get:
+      security:
+        - firebase: []
       summary: Get all players
       operationId: getPlayers
       x-eov-operation-handler: v1/handlers/entities
@@ -59,6 +73,8 @@ paths:
 
   /players/{id}:
     get:
+      security:
+        - firebase: []
       summary: Get a player by ID
       operationId: getPlayer
       x-eov-operation-handler: v1/handlers/entities
@@ -83,6 +99,8 @@ paths:
         '404':
           description: Player not found
     delete:
+      security:
+        - firebase: []
       summary: Delete a player by ID
       operationId: deletePlayer
       x-eov-operation-handler: v1/handlers/entities
@@ -100,6 +118,8 @@ paths:
 
   /matches:
     post:
+      security:
+        - firebase: []
       summary: Create a new match
       operationId: postMatch
       x-eov-operation-handler: v1/handlers/entities
@@ -147,6 +167,8 @@ paths:
           description: Missing match details
 
     get:
+      security:
+        - firebase: []
       summary: Get all matches (most recent first)
       operationId: getMatches
       x-eov-operation-handler: v1/handlers/entities
@@ -176,6 +198,8 @@ paths:
 
   /head2head:
     get:
+      security:
+        - firebase: []
       summary: Get head-to-head statistics between two players
       operationId: getHeadToHead
       x-eov-operation-handler: v1/handlers/entities
