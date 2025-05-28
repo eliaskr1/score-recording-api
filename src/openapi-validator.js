@@ -3,6 +3,7 @@ const OpenApiValidator = require('express-openapi-validator');
 const path = require('path');
 const yaml = require('js-yaml');
 const fs = require('fs');
+const authenticate = require('./middleware/parse-token');
 
 const { loadSchemas, SCHEMA_DIR } = require('./load-schemas');
 
@@ -17,6 +18,7 @@ module.exports = (app) => {
       operationHandlers: path.join(__dirname, '.'),
     });
     console.log(`Registering OpenAPI validator for [${apiSpec}]`);
+    app.use(authenticate)
     app.use(validator);
     // Make the schema itself available with its original name.
     const schemaPath = path.relative(SCHEMA_DIR, apiSpec);
